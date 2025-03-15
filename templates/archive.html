@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آرشیو کارها</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>✨ آرشیو کارهای گذشته ✨</h1>
+        
+        <div class="archive-section">
+            <a href="{{ url_for('index') }}" class="back-btn">بازگشت به لیست کارها</a>
+        </div>
+
+        <ul class="task-list archived">
+            {% if archived_tasks %}
+                {% for task in archived_tasks %}
+                    <li>
+                        <div class="task-info">
+                            <span>{{ task.text }}</span>
+                            <small>{{ task.date or 'بدون تاریخ' }} - {{ task.day or 'بدون روز' }}</small>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>هیچ کار آرشیو شده‌ای وجود ندارد.</li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>

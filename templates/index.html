@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست کارها</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>✨ لیست کارهای من ✨</h1>
+        <p>امروز: {{ current_date.strftime('%Y-%m-%d') }} (تقویم پارسی)</p>
+        
+        <form method="POST" action="/">
+            <input type="text" name="task" placeholder="یک کار جدید اضافه کنید..." autocomplete="off" required>
+            <input type="date" name="date" id="datepicker">
+            <input type="text" name="day" placeholder="روز (مثال: دوشنبه)" autocomplete="off">
+            <button type="submit">اضافه کردن</button>
+        </form>
+
+        <div class="archive-section">
+            <a href="{{ url_for('archive') }}" class="archive-btn">نمایش آرشیو</a>
+        </div>
+
+        <h2>کارهای فعال</h2>
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="{{ 'done' if task.done else '' }}">
+                    <div class="task-info">
+                        <span>{{ task.text }}</span>
+                        <small>{{ task.date or 'بدون تاریخ' }} - {{ task.day or 'بدون روز' }}</small>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ url_for('toggle', task_id=loop.index0) }}" class="toggle-btn">
+                            {{ "✔" if task.done else "○" }}
+                        </a>
+                        <a href="{{ url_for('edit', task_id=loop.index0) }}" class="edit-btn">✎</a>
+                        <a href="{{ url_for('delete', task_id=loop.index0) }}" class="delete-btn">✖</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+ <!--       <h2>کارهای آرشیو شده</h2>
+        <ul class="task-list archived">
+            {% for task in archived_tasks %}
+                <li>
+                    <div class="task-info">
+                        <span>{{ task.text }}</span>
+                        <small>{{ task.date or 'بدون تاریخ' }} - {{ task.day or 'بدون روز' }}</small>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul> -->
+    </div>
+</body>
+</html>

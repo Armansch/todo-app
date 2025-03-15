@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش کار</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>✨ ویرایش کار ✨</h1>
+        
+        <form method="POST" action="{{ url_for('edit', task_id=task_id) }}">
+            <input type="text" name="task" value="{{ task.text }}" placeholder="متن کار" autocomplete="off" required>
+            <input type="date" name="date" value="{{ gregorian_date or '' }}">
+            <input type="text" name="day" value="{{ task.day or '' }}" placeholder="روز (مثال: دوشنبه)" autocomplete="off">
+            <button type="submit">ذخیره</button>
+            <a href="{{ url_for('index') }}" class="cancel-btn">لغو</a>
+        </form>
+    </div>
+</body>
+</html>
